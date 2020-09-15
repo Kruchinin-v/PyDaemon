@@ -60,7 +60,8 @@ class StatCon:
             now_time = strftime("%H:%M", time.localtime())
             if now_time in time_run:
                 print(f"Запуск скрипта в {now_time}")
-                my_thread = MyThread("тут параметры")
+                my_thread = MyThread("/usr/bin/php",
+                                     "/home/user/call.php")
                 my_thread.start()
             time.sleep(56)
 
