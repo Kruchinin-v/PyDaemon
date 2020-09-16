@@ -5,6 +5,7 @@ After=network.target
 
 [Service]
 Type=forking
+# указать файл pid, как и в переменной pidFile в файле daemonconfig.py
 PIDFile=/var/log/python-daemon/daemon-naprimer.pid
 
 # без этого лог демона пишется только после завершения сервиса

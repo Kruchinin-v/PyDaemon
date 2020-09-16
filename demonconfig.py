@@ -3,12 +3,17 @@ import time
 from custom_thread import MyThread
 from time import strftime
 
+
 class SigFunctionsCon:
 
     def __init__(self, ourdaemon):
         self.__ourdaemon = ourdaemon
 
     def SIGTERM(self):
+        """
+        действия при остановке демона
+        :return:
+        """
         now_time = strftime("%H:%M", time.localtime())
         sys.stdout.write(f"Остановлен в {now_time}\n")
         sys.exit(0)
@@ -51,18 +56,26 @@ class StatCon:
             time.sleep(1)
 
     def run(self):
+        """
+        Фукнция, которая выполняется при запуске демона.
+        Тут необходимо указать действия, которые вы ожидаете от демона
+        """
         now_time = strftime("%H:%M", time.localtime())
         print(f"\nЗапуск pydaemon в {now_time}")
         # время, когда нужно будет запускать скрипт
         time_run = ["10:00", "13:00", "16:00"]
-        while (True):
+        while True:
             self.time_alignment()
             now_time = strftime("%H:%M", time.localtime())
-            if now_time in time_run:
+            if now_time in time_run:  # если сейчас выбранное время
                 print(f"Запуск скрипта в {now_time}")
                 my_thread = MyThread("/usr/bin/php",
                                      "/home/user/call.php")
                 my_thread.start()
+            # указать именно 56 секунд(или меньше), чтобы избежать ошибки,
+            # когда уже есть несколько секунд и
+            # следующая минута будет пропущена. Оставшиеся секунды выровняются
+            # функцией time_alignment
             time.sleep(56)
 
     pidFile = "/var/log/python-daemon/daemon-naprimer.pid"

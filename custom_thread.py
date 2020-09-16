@@ -20,6 +20,8 @@ class MyThread(Thread):
     def run(self):
         """Запуск потока"""
         command = f"{self.pathPHP} {self.script}"
+
+        # запуск команды command. Вывод будет в answer.stdout и answer.stderr
         answer = subprocess.run(command, shell=True, stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE, encoding='UTF-8')
         print(answer.stdout)
